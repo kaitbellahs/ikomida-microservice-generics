@@ -13,7 +13,7 @@ steps:
     args:
       [
         "-c",
-        'docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/docker/generics-microservice-image:$TAG_NAME -t us-central1-docker.pkg.dev/$PROJECT_ID/docker/generics-microservice-image:latest . --build-arg GOOGLE_SERVICE_ACCOUNT="$(echo $$GOOGLE_SERVICE_ACCOUNT)" --build-arg PROJECT_ID=$(echo $PROJECT_ID) --cache-from us-central1-docker.pkg.dev/$PROJECT_ID/docker/generics-microservice-image:latest',
+        'docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/docker/generics-microservice-image:latest . --build-arg GOOGLE_SERVICE_ACCOUNT="$(echo $$GOOGLE_SERVICE_ACCOUNT)" --build-arg PROJECT_ID=$(echo $PROJECT_ID) --cache-from us-central1-docker.pkg.dev/$PROJECT_ID/docker/generics-microservice-image:latest',
       ]
     secretEnv: ["GOOGLE_SERVICE_ACCOUNT"]
     waitFor:
@@ -27,11 +27,11 @@ steps:
         "(/builder/kubectl.bash -n ikomida delete deploy generics-microservice || true) && for FILE in k8s/*.yaml; do printf \"$(cat $$FILE)\n---\n\" | envsubst; done | /builder/kubectl.bash apply -f -",
       ]
     env:
-      - "CLOUDSDK_COMPUTE_ZONE=us-central1-b"
-      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-dev-cluster"
+      - "PROJECT_ID=$PROJECT_ID"
+      - "CLOUDSDK_COMPUTE_ZONE=us-central1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=ikomida-cluster"
 images:
   [
-    "us-central1-docker.pkg.dev/$PROJECT_ID/docker/generics-microservice-image:$TAG_NAME",
     "us-central1-docker.pkg.dev/$PROJECT_ID/docker/generics-microservice-image:latest",
   ]
 availableSecrets:
