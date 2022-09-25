@@ -31,7 +31,7 @@ spec:
             privileged: false
             readOnlyRootFilesystem: true
           ports:
-            - containerPort:
+            - containerPort: 1988
           resources:
             requests:
               cpu: "18m"
@@ -90,23 +90,3 @@ spec:
                 secretKeyRef:
                   name: environment
                   key: DBPORT
-            - name: MQUSER
-              valueFrom:
-                secretKeyRef:
-                  name: environment
-                  key: MQUSER
-            - name: MQPASS
-              valueFrom:
-                secretKeyRef:
-                  name: environment
-                  key: MQPASS
-            - name: MQVHOST
-              valueFrom:
-                secretKeyRef:
-                  name: environment
-                  key: MQVHOST
-            - name: PROJID
-              valueFrom:
-                secretKeyRef:
-                  name: environment
-                  key: PROJID
