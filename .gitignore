@@ -12,3 +12,4 @@ yarn.lock
 *.lock
 package-lock.json
 build
+!yarn.lock
