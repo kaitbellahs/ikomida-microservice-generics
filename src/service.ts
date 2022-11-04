@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import Generics from './controllers/Generics.js'
+import Contacts from './controllers/Contacts.js'
 import { Types, Utils } from '@ikomida/shared-backend'
 
 import { createRequire } from 'module'
@@ -18,6 +19,12 @@ app.use(bodyParser.json({ limit: '10mb' }))
 Utils.System.setExpressResponse(app)
 const port = process?.env?.PORT || 80
 const generics = new Generics(logger)
+const contacts = new Contacts(logger)
+
+app.post('/requestContact', async (req, res) => {
+  const payload = await contacts.requestContact(req.body)
+  res.sendResponse(payload)
+})
 
 app.get('/term/:type', async (req, res) => {
   const payload = await generics.getTerm(Types.Types.TTerm.valueOf(String(req.params?.type)))
